@@ -1,3 +1,4 @@
+"use client"
 import {
     Sidebar,
     SidebarContent,
@@ -6,136 +7,94 @@ import {
     SidebarMenuItem,
     SidebarRail,
 } from "@/components/ui/sidebar";
-import { Boxes, LayoutPanelLeft } from "lucide-react";
+import { Boxes, LayoutPanelLeft,BadgeDollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SearchForm } from "./search-form";
 import Logo from "../../public/Logo.svg"
+import { NavMain } from "./nav-main";
 
 // This is sample data.
 const data = {
     navMain: [
         {
             title: "Dashboard",
-            url: "#",
+            url: "/admin",
+            icon: LayoutPanelLeft,
         },
         {
-            title: "Building Your Application",
-            url: "#",
+            title: "Products",
+            icon: Boxes,
             items: [
                 {
-                    title: "Routing",
+                    title: "Add new product",
+                    url: "/admin/products/create",
+                },
+                {
+                    title: "All products",
+                    url: "/admin/products/all-products",
+                },
+                {
+                    title: "In house products",
                     url: "#",
                 },
                 {
-                    title: "Data Fetching",
-                    url: "#",
-                    isActive: true,
-                },
-                {
-                    title: "Rendering",
+                    title: "Digital products",
                     url: "#",
                 },
                 {
-                    title: "Caching",
+                    title: "Bulk Import",
                     url: "#",
                 },
                 {
-                    title: "Styling",
+                    title: "Bulk export",
                     url: "#",
                 },
                 {
-                    title: "Optimizing",
+                    title: "Category",
                     url: "#",
                 },
                 {
-                    title: "Configuring",
+                    title: "Category wise discount",
                     url: "#",
                 },
                 {
-                    title: "Testing",
+                    title: "Brand",
                     url: "#",
                 },
                 {
-                    title: "Authentication",
+                    title: "Attribute",
                     url: "#",
                 },
                 {
-                    title: "Deploying",
+                    title: "Colors",
                     url: "#",
                 },
                 {
-                    title: "Upgrading",
+                    title: "Size guide",
                     url: "#",
                 },
                 {
-                    title: "Examples",
+                    title: "Product reviews",
                     url: "#",
                 },
             ],
         },
         {
-            title: "API Reference",
+            title: "Sales",
             url: "#",
+            icon: BadgeDollarSign,
             items: [
                 {
-                    title: "Components",
+                    title: "All orders",
                     url: "#",
                 },
                 {
-                    title: "File Conventions",
+                    title: "inhouse orders",
                     url: "#",
                 },
                 {
-                    title: "Functions",
-                    url: "#",
-                },
-                {
-                    title: "next.config.js Options",
-                    url: "#",
-                },
-                {
-                    title: "CLI",
-                    url: "#",
-                },
-                {
-                    title: "Edge Runtime",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Architecture",
-            url: "#",
-            items: [
-                {
-                    title: "Accessibility",
-                    url: "#",
-                },
-                {
-                    title: "Fast Refresh",
-                    url: "#",
-                },
-                {
-                    title: "Next.js Compiler",
-                    url: "#",
-                },
-                {
-                    title: "Supported Browsers",
-                    url: "#",
-                },
-                {
-                    title: "Turbopack",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Community",
-            url: "#",
-            items: [
-                {
-                    title: "Contribution Guide",
+                    title: "pick-up point order",
                     url: "#",
                 },
             ],
@@ -145,8 +104,8 @@ const data = {
 
 export function AppSidebar({ ...props }) {
     return (
-        <Sidebar {...props} className="bg-green-800">
-            <SidebarContent className="bg-white">
+        <Sidebar {...props} className="">
+            <SidebarContent className="bg-white overflow-x-hidden">
                 <div className="py-2">
                     <Link
                         href="/admin"
@@ -163,33 +122,7 @@ export function AppSidebar({ ...props }) {
                 <SearchForm />
                 <SidebarGroup className="p-0">
                     <SidebarMenu className="space-y-[2px]">
-                        <SidebarMenuItem className="bg-transparent hover:bg-[#3a3f50] py-[10px] px-6">
-                            <Link
-                                href="/admin"
-                                className="flex items-center gap-3 text-gray-800 text-sm font-semibold"
-                            >
-                                <LayoutPanelLeft size={20} />
-                                Dashboard
-                            </Link>
-                        </SidebarMenuItem>
-                        <SidebarMenuItem className="bg-transparent hover:bg-[#3a3f50] py-[10px] px-6">
-                            <Link
-                                href="/admin"
-                                className="flex items-center gap-3 text-gray-800 text-sm font-semibold"
-                            >
-                                <Boxes size={20} />
-                                Products
-                            </Link>
-                        </SidebarMenuItem>
-                        <SidebarMenuItem className="bg-transparent hover:bg-[#3a3f50] py-[10px] px-6">
-                            <Link
-                                href="/admin"
-                                className="flex items-center gap-3 text-gray-800 text-sm font-semibold"
-                            >
-                                <LayoutPanelLeft size={20} />
-                                Dashboard
-                            </Link>
-                        </SidebarMenuItem>
+                        <NavMain items={data.navMain} />
                     </SidebarMenu>
                 </SidebarGroup>
             </SidebarContent>

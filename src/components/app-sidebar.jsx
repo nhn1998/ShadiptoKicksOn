@@ -147,7 +147,7 @@ export function AppSidebar({ ...props }) {
     return (
         <Sidebar {...props} className="bg-green-800">
             <SidebarContent className="bg-white">
-                <div className="h-[70px]">
+                <div className="py-2">
                     <Link
                         href="/admin"
                         className="flex items-center justify-center"

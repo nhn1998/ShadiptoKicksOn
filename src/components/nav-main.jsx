@@ -14,10 +14,14 @@ import {
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export function NavMain({ items }) {
     const pathname = usePathname();
     // console.log("The pathname is:", pathname);
+    const [openItem, setOpenItem] = useState(
+        items.find((item) => item.isActive)?.title || null
+    );
 
     const isActive = (item) => {
         if (pathname === item.url) return true;
@@ -35,7 +39,10 @@ export function NavMain({ items }) {
                         <Collapsible
                             key={item.title}
                             asChild
-                            defaultOpen={item.isActive}
+                            open={openItem === item.title}
+                            onOpenChange={(isOpen) => {
+                                setOpenItem(isOpen ? item.title : null);
+                            }}
                             className="group/collapsible"
                         >
                             <SidebarMenuItem>
@@ -44,7 +51,7 @@ export function NavMain({ items }) {
                                         <button
                                             size="lg"
                                             tooltip={item.title}
-                                            className={`hover:text-[#009ef7] w-full py-[10px] px-6 gap-3 flex items-center bg-transparent rounded-none hover:bg-[#009cf725] border-l-4  hover:border-[#009ef7] duration-300 ${
+                                            className={`hover:text-[#009ef7] w-full py-[10px] px-6 gap-3 flex items-center rounded-none hover:bg-[#009cf725] border-l-4 hover:border-[#009ef7] duration-300 ${
                                                 active
                                                     ? "bg-[#009cf725] text-[#009ef7] border-[#009ef7]"
                                                     : "bg-transparent text-black border-transparent"
@@ -66,30 +73,32 @@ export function NavMain({ items }) {
                                     </Link>
                                 </CollapsibleTrigger>
                                 <CollapsibleContent>
-                                    <SidebarMenuSub className="gap-0 border-none pr-0 mr-0">
-                                        {item.items?.map((subItem) => (
-                                            <SidebarMenuSubItem
-                                                key={subItem.title}
-                                                className=""
-                                            >
-                                                <Link href={subItem.url}>
-                                                    <button
-                                                        asChild
-                                                        className={`px-3 py-1 w-full text-left hover:text-[#009ef7] border-l-2 hover:bg-[#009cf725] hover:border-[#009ef7] duration-300 ${
-                                                            pathname ===
-                                                            subItem.url
-                                                                ? "bg-[#009cf725] border-[#009ef7] text-[#009ef7]"
-                                                                : "border-gray-300 text-black"
-                                                        }`}
-                                                    >
-                                                        <span className="text-sm font-semibold capitalize">
-                                                            {subItem.title}
-                                                        </span>
-                                                    </button>
-                                                </Link>
-                                            </SidebarMenuSubItem>
-                                        ))}
-                                    </SidebarMenuSub>
+                                    {item.items && (
+                                        <SidebarMenuSub className="gap-0 border-none pr-0 mr-0">
+                                            {item.items?.map((subItem) => (
+                                                <SidebarMenuSubItem
+                                                    key={subItem.title}
+                                                    className=""
+                                                >
+                                                    <Link href={subItem.url}>
+                                                        <button
+                                                            asChild
+                                                            className={`px-3 py-1 w-full text-left hover:text-[#009ef7] border-l-2 hover:bg-[#009cf725] hover:border-[#009ef7] duration-300 ${
+                                                                pathname ===
+                                                                subItem.url
+                                                                    ? "bg-[#009cf725] border-[#009ef7] text-[#009ef7]"
+                                                                    : "border-gray-300 text-black"
+                                                            }`}
+                                                        >
+                                                            <span className="text-sm font-semibold capitalize">
+                                                                {subItem.title}
+                                                            </span>
+                                                        </button>
+                                                    </Link>
+                                                </SidebarMenuSubItem>
+                                            ))}
+                                        </SidebarMenuSub>
+                                    )}
                                 </CollapsibleContent>
                             </SidebarMenuItem>
                         </Collapsible>
